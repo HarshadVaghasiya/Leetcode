@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define pb push_back
+#define pob pop_back
+#define S second
+#define F first
+#define vll vector<long long int>
+#define pll pair<long long int,long long int>
+#define mod 1000000007
+#define mod2 998244353
+#define ll long long int
+#define ld long double  
+
+class Solution {
+public:
+    int waysToPartition(vector<int>& nums, int k) {
+        ll n = nums.size();
+        vll pre(n);
+        map<ll,ll> mp1 , mp2;
+        for(ll i = 0 ; i < n ; i++ )
+        {
+            pre[i] = nums[i];
+            if(i > 0)
+                pre[i] += pre[i-1];
+            mp2[pre[i]]++;
+        }
+        ll ans = 0;
+        // no change
+        for(ll i = 0 ; i + 1 < n ; i++ )
+        {
+            if(pre[i] * 2 == pre[n-1])
+                ans++;
+        }
+        // one change
+        for(ll i = 0 ; i < n ; i++ )
+        {
+            ll diff = k - nums[i];
+            ll new_sum = pre[n-1] + diff;
+            if(new_sum % 2 == 0)
+                ans = max(ans , mp1[new_sum / 2] + mp2[new_sum / 2 - diff] - (new_sum == 0));
+            mp1[pre[i]]++;
+            mp2[pre[i]]--;
+        }
+        return ans;
+    }
+};
