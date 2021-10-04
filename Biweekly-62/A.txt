@@ -1,0 +1,15 @@
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& org, int m, int n) {
+        int s = org.size();
+        if(s != m*n ){
+            return {};
+        }
+        vector<vector<int> > ret(m, vector<int>(n));
+        for(int i = 0; i < m*n; i++){
+            ret[i/n][i%n] = org[i];
+        }
+        
+        return ret;
+    }
+};
