@@ -1,0 +1,23 @@
+class Solution {
+public:
+    long long wonderfulSubstrings(string w) 
+    {
+            long long ans=0;
+            map<int,int> mp;
+            mp[0]=1;
+            int mask=0;
+            for(auto x:w)
+            {
+                    int t=(x-'a');
+                    mask^=(1<<t);
+                    ans+=mp[mask];
+                    for(int i=0;i<10;i++)
+                    {
+                            ans+=(mp[mask^(1<<i)]);
+                    }
+                    mp[mask]++;
+                    
+            }
+            return ans;
+    }
+};
