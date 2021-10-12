@@ -1,0 +1,72 @@
+class Solution {
+public:
+    vector<vector<int>> rotateGrid(vector<vector<int>>& a, int k) 
+    {
+        int n = a.size();
+        int m = a[0].size();
+        int l = 0,r = 0;
+        int sz1=n,sz2=m;
+        while(l < n / 2 and r < m / 2)
+        {
+            vector< int > cnt;
+            for(int i = r; i < m - r;i++)
+            {
+                cnt.push_back(a[l][i]);
+            }
+            cnt.pop_back();
+            for(int i = l; i < n - l;i++)
+            {
+                cnt.push_back(a[i][m - r - 1]);
+            }
+            cnt.pop_back();
+            for(int i = m - r - 1; i>= r; i--)
+            {
+                cnt.push_back(a[n - l - 1][i]);
+            }
+            cnt.pop_back();
+            for(int i = n - l - 1; i > l;i--)
+            {
+                cnt.push_back(a[i][r]);
+            }
+            
+            int sz= cnt.size();
+            int k1 = k % sz;
+            vector< int > t(sz);
+            
+            for(int i = 0; i < sz; ++i)
+            {
+                t[i] = cnt[(i + k1) % sz];
+            }
+            
+            
+            int cur = 0;
+            for(int i = r; i < m - r; i++)
+            {
+                a[l][i] = t[cur];
+                cur += 1;
+            }
+            cur--;
+            for(int i = l; i < n - l;i++)
+            {
+                a[i][m - r - 1] = t[cur];
+                cur++;
+            }
+            cur--;
+            for(int i = m - r - 1; i >= r; i--)
+            {
+                a[n - l - 1][i] = t[cur];
+                cur++;
+            }
+            cur--;
+            for(int i = n - l - 1; i > l;i--)
+            {
+                a[i][r] = t[cur];
+                cur++;
+            }
+            l++;
+            r++;
+        }
+        
+        return a;
+    }
+};
